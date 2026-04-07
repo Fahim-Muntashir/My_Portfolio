@@ -5,26 +5,37 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Contact = () => {
   const [submitted, setSubmitted] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+    setError(false);
+
     const form = e.currentTarget;
     const data = new FormData(form);
-    
+
     try {
-      const response = await fetch('https://formspree.io/f/xvgzbgww', { // Replace with actual ID later or keep as is
+      const response = await fetch('https://formspree.io/f/xwvwynev', {
         method: 'POST',
         body: data,
         headers: {
           'Accept': 'application/json'
         }
       });
+
       if (response.ok) {
         setSubmitted(true);
         form.reset();
+      } else {
+        setError(true);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      setError(true);
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,14 +44,14 @@ const Contact = () => {
       <h2 className="section-title">
         <span className="mono">04.</span> What's Next?
       </h2>
-      
+
       <div style={styles.container} className="contact-grid">
         <div style={styles.contactInfo}>
           <h1 style={styles.heading}>Get in touch</h1>
           <p style={styles.desc}>
             I'm currently looking for new opportunities, my inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!
           </p>
-          
+
           <div style={styles.infoCards}>
             <div style={styles.infoCard}>
               <Mail style={styles.icon} />
@@ -49,7 +60,7 @@ const Contact = () => {
                 <a href="mailto:fahimmuntashir07@gmail.com" style={styles.infoText}>fahimmuntashir07@gmail.com</a>
               </div>
             </div>
-            
+
             <div style={styles.infoCard}>
               <Phone style={styles.icon} />
               <div>
@@ -57,7 +68,7 @@ const Contact = () => {
                 <p style={styles.infoText}>Available on request</p>
               </div>
             </div>
-            
+
             <div style={styles.infoCard}>
               <MapPin style={styles.icon} />
               <div>
@@ -70,18 +81,25 @@ const Contact = () => {
 
         <div style={styles.contactForm}>
           {submitted ? (
-            <div style={{...styles.infoCard, border: '1px solid var(--highlight-color)', padding: '40px', textAlign: 'center'}}>
-              <p style={{color: 'var(--highlight-color)', fontSize: '18px', fontWeight: 600}}>Thanks for your message!</p>
+            <div style={{ ...styles.infoCard, border: '1px solid var(--highlight-color)', padding: '40px', textAlign: 'center', display: 'block' }}>
+              <p style={{ color: 'var(--highlight-color)', fontSize: '18px', fontWeight: 600, margin: '0 0 10px 0' }}>Thanks for your message!</p>
               <p style={styles.infoText}>I'll get back to you as soon as possible.</p>
-              <button onClick={() => setSubmitted(false)} style={{...styles.submitBtn, width: 'auto', padding: '10px 20px', marginTop: '20px'}}>Send another</button>
+              <button onClick={() => setSubmitted(false)} style={{ ...styles.submitBtn, width: 'auto', padding: '10px 20px', marginTop: '20px' }}>Send another</button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} style={styles.form}>
               <input type="text" name="name" placeholder="Name" style={styles.input} required />
               <input type="email" name="email" placeholder="Email" style={styles.input} required />
-              <textarea name="message" placeholder="Message" rows={5} style={{...styles.input, resize: 'vertical'}} required />
-              <button type="submit" style={styles.submitBtn}>
-                Submit
+              <textarea name="message" placeholder="Message" rows={5} style={{ ...styles.input, resize: 'vertical' }} required />
+
+              {error && (
+                <p style={{ color: '#ff4d4d', fontSize: '14px', margin: '0' }}>
+                  Oops! Something went wrong. Please try again.
+                </p>
+              )}
+
+              <button type="submit" style={{ ...styles.submitBtn, opacity: loading ? 0.7 : 1 }} disabled={loading}>
+                {loading ? 'Sending...' : 'Submit'}
               </button>
             </form>
           )}
