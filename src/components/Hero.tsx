@@ -1,45 +1,127 @@
+'use client';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { motion, animate, useMotionValue, useTransform } from 'framer-motion';
+
+const Counter = ({ from, to, duration = 2, suffix = '' }: { from: number, to: number, duration?: number, suffix?: string }) => {
+  const count = useMotionValue(from);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
+  const [displayValue, setDisplayValue] = useState(from);
+
+  useEffect(() => {
+    const controls = animate(count, to, { duration });
+    return controls.stop;
+  }, [count, to, duration]);
+
+  useEffect(() => {
+    return rounded.on("change", (latest) => setDisplayValue(latest));
+  }, [rounded]);
+
+  return <motion.span>{displayValue}{suffix}</motion.span>;
+};
 
 const Hero = () => {
   return (
     <section id="hero" style={styles.section} className="hero-section">
       <div style={styles.content}>
-        <p className="highlight mono" style={styles.intro}>Hi, my name is</p>
-        <h1 style={styles.h1}>Fahim Muntashir.</h1>
-        <h2 style={{ ...styles.h1, color: 'var(--text-secondary)' }}>I build things for the web.</h2>
-        <p style={styles.desc}>
+        <motion.p
+          className="highlight mono"
+          style={styles.intro}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Hi, my name is
+        </motion.p>
+        <motion.h1
+          style={styles.h1}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          Fahim Muntashir.
+        </motion.h1>
+        <motion.h2
+          style={{ ...styles.h1, color: 'var(--text-secondary)' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          I build things for the web.
+        </motion.h2>
+        <motion.p
+          style={styles.desc}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
           I’m a software engineer specializing in building (and occasionally designing) exceptional digital experiences. Currently, I’m focused on building accessible, human-centered products.
-        </p>
-        <div style={{ marginTop: '50px' }}>
+        </motion.p>
+        <motion.div
+          style={{ marginTop: '50px' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           <a href="#contact" className="btn-primary">GET IN TOUCH</a>
-        </div>
-        
+        </motion.div>
+
         <div style={styles.stats} className="hero-stats">
-          <div style={styles.statItem}>
-            <span style={styles.statNum}>12</span>
-            <span style={styles.statLabel}>Years<br/>Experience</span>
-          </div>
-          <div style={styles.statItem}>
-            <span style={styles.statNum}>165</span>
-            <span style={styles.statLabel}>Projects completed<br/>on 18 countries</span>
-          </div>
+          <motion.div
+            style={styles.statItem}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.6 }}
+          >
+            <span style={styles.statNum}>
+              <Counter from={0} to={5} suffix="+" />
+            </span>
+            <span style={styles.statLabel}>Years<br />Experience</span>
+          </motion.div>
+          <motion.div
+            style={styles.statItem}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.7 }}
+          >
+            <span style={styles.statNum}>
+              <Counter from={0} to={100} suffix="+" />
+            </span>
+            <span style={styles.statLabel}>Projects <br />completed</span>
+          </motion.div>
         </div>
       </div>
-      <div style={styles.imageContainer} className="hero-image">
-        {/* Placeholder for the hoodie avatar image */}
+      <motion.div
+        style={styles.imageContainer}
+        className="hero-image"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
         <div style={styles.avatarPlaceholder}>
-          <div style={styles.circleAngular}>A</div>
-          <div style={styles.circleJs}>JS</div>
-          <Image 
-            src="/portfolioimage.png" 
-            alt="Fahim Muntashir Portfolio Image" 
-            width={300} 
-            height={400} 
+          <motion.div
+            style={styles.circleAngular}
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          >
+            A
+          </motion.div>
+          <motion.div
+            style={styles.circleJs}
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          >
+            JS
+          </motion.div>
+          <Image
+            src="/portfolioimage.png"
+            alt="Fahim Muntashir Portfolio Image"
+            width={300}
+            height={400}
             style={styles.image}
           />
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

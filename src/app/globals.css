@@ -3,7 +3,8 @@
   --text-primary: #ccd6f6;
   --text-secondary: #8892b0;
   --highlight-color: #64ffda;
-  --bg-card: rgba(0, 0, 0, 0.15); /* Slightly darker for cards */
+  --bg-card: rgba(0, 0, 0, 0.15);
+  /* Slightly darker for cards */
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -26,8 +27,8 @@ body::before {
   width: 100vw;
   height: 100vh;
   z-index: -10;
-  background-image: 
-    linear-gradient(rgba(100, 255, 218, 0.03) 1px, transparent 1px),
+  background-image:
+    linear-gradient(rgba(90, 236, 202, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(100, 255, 218, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
   background-position: center;
@@ -48,7 +49,8 @@ a {
   transition: color 0.3s ease;
 }
 
-a:hover, .active-link {
+a:hover,
+.active-link {
   color: var(--highlight-color) !important;
 }
 
@@ -123,18 +125,23 @@ button {
 }
 
 /* Base Lenis Styles */
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
+
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
+
 .lenis.lenis-smooth [data-lenis-prevent] {
   overscroll-behavior: contain;
 }
+
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
@@ -164,18 +171,22 @@ html.lenis, html.lenis body {
   .main-container {
     padding: 0 50px;
   }
+
   .section {
     padding: 80px 0;
   }
+
   .about-grid {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 30px;
   }
-  .about-grid > div:first-child {
-    order: 1; 
+
+  .about-grid>div:first-child {
+    order: 1;
   }
-  .about-grid > div:last-child {
+
+  .about-grid>div:last-child {
     order: 2;
   }
 
@@ -185,16 +196,20 @@ html.lenis, html.lenis body {
     text-align: center;
     padding: 100px 0 !important;
   }
+
   .hero-stats {
     justify-content: center;
     flex-wrap: wrap;
   }
+
   .hero-image {
     margin-top: 50px;
   }
+
   .experience-container {
     flex-direction: column !important;
   }
+
   .experience-tabs {
     flex-direction: row !important;
     overflow-x: auto;
@@ -202,13 +217,16 @@ html.lenis, html.lenis body {
     border-bottom: 2px solid var(--text-secondary);
     width: 100% !important;
   }
+
   .experience-tab-button {
     text-align: center !important;
     min-width: 120px;
   }
+
   .skills-grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
+
   .contact-grid {
     grid-template-columns: 1fr !important;
   }
@@ -253,17 +271,21 @@ html.lenis, html.lenis body {
     flex-direction: column !important;
     text-align: left !important;
   }
+
   .project-image {
     height: 250px !important;
     margin-bottom: 20px;
   }
+
   .project-content {
     order: 2;
   }
+
   /* Remove absolute overrides for project alignment */
   .tech-list-responsive {
     justify-content: flex-start !important;
   }
+
   .links-responsive {
     justify-content: flex-start !important;
   }
@@ -273,16 +295,20 @@ html.lenis, html.lenis body {
   .main-container {
     padding: 0 25px;
   }
+
   .section-title {
     font-size: 1.5rem;
   }
+
   .section-title::after {
     width: 100%;
     margin-left: 10px;
   }
+
   .skills-grid {
     grid-template-columns: 1fr !important;
   }
+
   .hero-h1 {
     font-size: 40px !important;
   }
