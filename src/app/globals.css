@@ -272,9 +272,11 @@ html.lenis body {
     text-align: left !important;
   }
 
-  .project-image {
-    height: 250px !important;
+  .project-image-container {
+    height: 300px !important;
     margin-bottom: 20px;
+    grid-column: 1 / -1 !important;
+    width: 100%;
   }
 
   .project-content {
@@ -299,6 +301,7 @@ html.lenis body {
   .hero-name {
     white-space: normal;
   }
+
   .main-container {
     padding: 0 25px;
   }

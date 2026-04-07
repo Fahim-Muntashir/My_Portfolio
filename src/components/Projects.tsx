@@ -1,4 +1,4 @@
-import React from 'react';
+import Image from 'next/image';
 import { ExternalLink, Code } from 'lucide-react';
 
 const Projects = () => {
@@ -8,8 +8,10 @@ const Projects = () => {
       type: 'Featured Project',
       description: 'A Fiverr-style freelancing marketplace tailored for the Bangladeshi market. Supports distinct dashboards for Admins, Sellers, and Buyers. Features multi-tier service packages, secure SSLCommerz payments, and dynamic order tracking.',
       tech: ['Next.js 14', 'TypeScript', 'Node.js', 'Express', 'Prisma', 'PostgreSQL'],
-      github: 'https://github.com/Fahim-Muntashir/OnlineHat_Client.git',
-      external: '#',
+      frontend: 'https://github.com/Fahim-Muntashir/OnlineHat_Client.git',
+      backend: 'https://github.com/Fahim-Muntashir/OnlineHat_Server',
+      live: 'https://online-hat.vercel.app/',
+      image: '/freelancingiamge.png',
       imageAlign: 'left',
     },
     {
@@ -17,8 +19,9 @@ const Projects = () => {
       type: 'Featured Project',
       description: 'A dedicated, online marketplace for buying and selling cars. It gives users the ability to list cars with photos, details, and price. A fully functional web application utilizing React, Node.js, and MongoDB.',
       tech: ['React', 'Node.js', 'Express', 'MongoDB'],
-      github: '#',
-      external: '#',
+      frontend: '#',
+      backend: '#',
+      live: '#',
       imageAlign: 'right',
     },
     {
@@ -26,8 +29,9 @@ const Projects = () => {
       type: 'Featured Project',
       description: 'A car rental application that allows users to find and book cars for rent. Admins can manage the car inventory, approve rentals, and track users. Integrates payment gateways and robust authentication.',
       tech: ['Next.js', 'TypeScript', 'Tailwind', 'PostgreSQL'],
-      github: '#',
-      external: '#',
+      frontend: '#',
+      backend: '#',
+      live: '#',
       imageAlign: 'left',
     }
   ];
@@ -42,27 +46,40 @@ const Projects = () => {
         {projects.map((project, i) => (
           <div key={i} style={styles.projectNode} className="project-node">
             {project.imageAlign === 'left' && (
-              <div style={{...styles.projectImage, ...styles.imageLeft}} className="project-image">
-                <div style={styles.imagePlaceholder}>Web App Preview</div>
+              <div style={{ ...styles.projectImage, ...styles.imageLeft }} className="project-image-container">
+                <a href={project.live} target="_blank" rel="noopener noreferrer" style={styles.imageLink}>
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      className="project-img-content"
+                    />
+                  ) : (
+                    <div style={styles.imagePlaceholder}>Web App Preview</div>
+                  )}
+                  <div className="image-tint"></div>
+                </a>
               </div>
             )}
-            
+
             <div style={{
               ...styles.projectContent,
               ...(project.imageAlign === 'left' ? styles.contentRight : styles.contentLeft)
             }} className="project-content">
               <p style={styles.projectType}>{project.type}</p>
               <h3 style={styles.projectTitle}>
-                <a href={project.external}>{project.title}</a>
+                <a href={project.live} target="_blank" rel="noopener noreferrer">{project.title}</a>
               </h3>
-              
+
               <div style={{
                 ...styles.projectDescription,
                 ...(project.imageAlign === 'right' ? styles.descLeft : styles.descRight)
               }}>
                 <p>{project.description}</p>
               </div>
-              
+
               <ul style={{
                 ...styles.techList,
                 ...(project.imageAlign === 'left' ? styles.techListRight : styles.techListLeft)
@@ -71,19 +88,39 @@ const Projects = () => {
                   <li key={j}>{tech}</li>
                 ))}
               </ul>
-              
+
               <div style={{
                 ...styles.links,
                 ...(project.imageAlign === 'left' ? styles.linksRight : styles.linksLeft)
               }} className="links-responsive">
-                <a href={project.github} style={styles.linkIcon}><Code size={20} /></a>
-                <a href={project.external} style={styles.linkIcon}><ExternalLink size={20} /></a>
+                <a href={project.frontend} target="_blank" rel="noopener noreferrer" style={styles.linkItem} title="Frontend Code">
+                  <Code size={20} /> <span style={styles.linkText}>Frontend</span>
+                </a>
+                <a href={project.backend} target="_blank" rel="noopener noreferrer" style={styles.linkItem} title="Backend Code">
+                  <Code size={20} /> <span style={styles.linkText}>Backend</span>
+                </a>
+                <a href={project.live} target="_blank" rel="noopener noreferrer" style={styles.linkItem} title="Live Site">
+                  <ExternalLink size={20} /> <span style={styles.linkText}>Live</span>
+                </a>
               </div>
             </div>
 
             {project.imageAlign === 'right' && (
-              <div style={{...styles.projectImage, ...styles.imageRight}} className="project-image">
-                <div style={styles.imagePlaceholder}>Web App Preview</div>
+              <div style={{ ...styles.projectImage, ...styles.imageRight }} className="project-image-container">
+                <a href={project.live} target="_blank" rel="noopener noreferrer" style={styles.imageLink}>
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      className="project-img-content"
+                    />
+                  ) : (
+                    <div style={styles.imagePlaceholder}>Web App Preview</div>
+                  )}
+                  <div className="image-tint"></div>
+                </a>
               </div>
             )}
           </div>
@@ -213,6 +250,24 @@ const styles = {
   linkIcon: {
     color: 'var(--text-primary)',
     transition: 'color 0.2s',
+  },
+  linkItem: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '5px',
+    color: 'var(--text-primary)',
+    textDecoration: 'none',
+    fontSize: '14px',
+    transition: 'color 0.2s',
+  },
+  linkText: {
+    fontFamily: 'var(--font-mono)',
+  },
+  imageLink: {
+    display: 'block',
+    width: '100%',
+    height: '100%',
+    position: 'relative' as const,
   }
 };
 
