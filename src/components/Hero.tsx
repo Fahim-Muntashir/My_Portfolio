@@ -21,6 +21,35 @@ const Counter = ({ from, to, duration = 2, suffix = '' }: { from: number, to: nu
 };
 
 const Hero = () => {
+  const typingPhrases = ["Software Developer.", "UI/UX Designer.", "Content Creator."];
+  const [displayText, setDisplayText] = useState("");
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(150);
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const currentPhrase = typingPhrases[phraseIndex];
+      if (isDeleting) {
+        setDisplayText(currentPhrase.substring(0, displayText.length - 1));
+        setTypingSpeed(50);
+      } else {
+        setDisplayText(currentPhrase.substring(0, displayText.length + 1));
+        setTypingSpeed(100);
+      }
+
+      if (!isDeleting && displayText === currentPhrase) {
+        setTimeout(() => setIsDeleting(true), 2000);
+      } else if (isDeleting && displayText === "") {
+        setIsDeleting(false);
+        setPhraseIndex((prev) => (prev + 1) % typingPhrases.length);
+      }
+    };
+
+    const timer = setTimeout(handleTyping, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, phraseIndex, typingSpeed]);
+
   return (
     <section id="hero" style={styles.section} className="hero-section">
       <div style={styles.content}>
@@ -35,20 +64,33 @@ const Hero = () => {
         </motion.p>
         <motion.h1
           style={styles.h1}
+          className="hero-name"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           Fahim Muntashir.
         </motion.h1>
+
         <motion.h2
-          style={{ ...styles.h1, color: 'var(--text-secondary)' }}
+          style={{ ...styles.h2, color: 'var(--text-secondary)' }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          I build things for the web.
+          I am a{" "}
+          <span className="highlight" style={{ fontWeight: 600 }}>
+            {displayText}
+          </span>
+          <motion.span
+            animate={{ opacity: [1, 0, 1] }}
+            transition={{ repeat: Infinity, duration: 0.8 }}
+            style={{ fontWeight: 300, color: 'var(--highlight-color)' }}
+          >
+            |
+          </motion.span>
         </motion.h2>
+
         <motion.p
           style={styles.desc}
           initial={{ opacity: 0, y: 20 }}
@@ -57,6 +99,7 @@ const Hero = () => {
         >
           I’m a software engineer specializing in building (and occasionally designing) exceptional digital experiences. Currently, I’m focused on building accessible, human-centered products.
         </motion.p>
+
         <motion.div
           style={{ marginTop: '50px' }}
           initial={{ opacity: 0, y: 20 }}
@@ -149,6 +192,12 @@ const styles = {
     fontSize: 'clamp(40px, 8vw, 70px)',
     fontWeight: 600,
     lineHeight: 1.1,
+  },
+  h2: {
+    margin: '10px 0 0 0',
+    fontSize: 'clamp(30px, 5vw, 40px)',
+    fontWeight: 600,
+    lineHeight: 1.2,
   },
   desc: {
     marginTop: '20px',

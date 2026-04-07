@@ -291,7 +291,14 @@ html.lenis body {
   }
 }
 
+.hero-name {
+  white-space: nowrap;
+}
+
 @media (max-width: 480px) {
+  .hero-name {
+    white-space: normal;
+  }
   .main-container {
     padding: 0 25px;
   }

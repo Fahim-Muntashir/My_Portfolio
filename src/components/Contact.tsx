@@ -4,6 +4,30 @@ import React from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Contact = () => {
+  const [submitted, setSubmitted] = React.useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    
+    try {
+      const response = await fetch('https://formspree.io/f/xvgzbgww', { // Replace with actual ID later or keep as is
+        method: 'POST',
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      if (response.ok) {
+        setSubmitted(true);
+        form.reset();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <section id="contact" className="section" style={styles.section}>
       <h2 className="section-title">
@@ -21,38 +45,46 @@ const Contact = () => {
             <div style={styles.infoCard}>
               <Mail style={styles.icon} />
               <div>
-                <p style={styles.infoTitle}>Email us</p>
-                <p style={styles.infoText}>daniel.simpley@example.com</p>
+                <p style={styles.infoTitle}>Email</p>
+                <a href="mailto:fahimmuntashir07@gmail.com" style={styles.infoText}>fahimmuntashir07@gmail.com</a>
               </div>
             </div>
             
             <div style={styles.infoCard}>
               <Phone style={styles.icon} />
               <div>
-                <p style={styles.infoTitle}>Call us</p>
-                <p style={styles.infoText}>+1 (877) 123-4567</p>
+                <p style={styles.infoTitle}>Call</p>
+                <p style={styles.infoText}>Available on request</p>
               </div>
             </div>
             
             <div style={styles.infoCard}>
               <MapPin style={styles.icon} />
               <div>
-                <p style={styles.infoTitle}>Our location</p>
-                <p style={styles.infoText}>Chowpaty Street, NY, USA</p>
+                <p style={styles.infoTitle}>Location</p>
+                <p style={styles.infoText}>Dhaka, Bangladesh</p>
               </div>
             </div>
           </div>
         </div>
 
         <div style={styles.contactForm}>
-          <form onSubmit={(e) => e.preventDefault()} style={styles.form}>
-            <input type="text" placeholder="Name" style={styles.input} />
-            <input type="email" placeholder="Email" style={styles.input} />
-            <textarea placeholder="Message" rows={5} style={{...styles.input, resize: 'vertical'}} />
-            <button type="submit" style={styles.submitBtn}>
-              Submit
-            </button>
-          </form>
+          {submitted ? (
+            <div style={{...styles.infoCard, border: '1px solid var(--highlight-color)', padding: '40px', textAlign: 'center'}}>
+              <p style={{color: 'var(--highlight-color)', fontSize: '18px', fontWeight: 600}}>Thanks for your message!</p>
+              <p style={styles.infoText}>I'll get back to you as soon as possible.</p>
+              <button onClick={() => setSubmitted(false)} style={{...styles.submitBtn, width: 'auto', padding: '10px 20px', marginTop: '20px'}}>Send another</button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} style={styles.form}>
+              <input type="text" name="name" placeholder="Name" style={styles.input} required />
+              <input type="email" name="email" placeholder="Email" style={styles.input} required />
+              <textarea name="message" placeholder="Message" rows={5} style={{...styles.input, resize: 'vertical'}} required />
+              <button type="submit" style={styles.submitBtn}>
+                Submit
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </section>
