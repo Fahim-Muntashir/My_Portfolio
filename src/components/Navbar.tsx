@@ -100,7 +100,7 @@ const Navbar = () => {
             </a>
           </li>
         </ul>
-        <a href="/resume.pdf" className="btn-primary" style={{ padding: '0.75rem 1rem' }} onClick={closeMenu}>Resume</a>
+        <a href="/full-stack-fahim.pdf" download className="btn-primary" style={{ padding: '0.75rem 1rem' }} onClick={closeMenu}>Resume</a>
       </nav>
     </header>
   );
