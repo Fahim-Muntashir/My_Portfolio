@@ -15,14 +15,21 @@ const Projects = () => {
       imageAlign: 'left',
     },
     {
-      title: 'Top Marketplace',
+      title: 'MediStore',
       type: 'Featured Project',
-      description: 'A dedicated, online marketplace for buying and selling cars. It gives users the ability to list cars with photos, details, and price. A fully functional web application utilizing React, Node.js, and MongoDB.',
-      tech: ['React', 'Node.js', 'Express', 'MongoDB'],
-      frontend: '#',
-      backend: '#',
-      live: '#',
+      description: 'A dedicated, online marketplace for buying and selling medicines. It provides role-based dashboards for customers, sellers, and admins with AI-powered features and a modern UI.',
+      tech: ['Next.js', 'TypeScript', 'TailwindCSS', 'Prisma', 'Node.js'],
+
+      frontendRepo: 'https://github.com/Fahim-Muntashir/MediStore_Client',
+      backendRepo: 'https://github.com/Fahim-Muntashir/MediStore',
+
+      frontendLive: 'https://medistore-client-flax.vercel.app/',
+      backendLive: 'https://medistore-eight.vercel.app',
+
+      demoVideo: 'https://youtu.be/WmwqLMje7aM',
+      image: '/medistore.png',
       imageAlign: 'right',
+      date: '2026-05-04'
     },
     {
       title: 'Car Rent',
